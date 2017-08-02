@@ -2571,16 +2571,16 @@ Mating connector PHR-3 &lt;br&gt;</description>
 </classes>
 <parts>
 <part name="R1" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="R-US_" device="0204/5" value="3k3"/>
-<part name="J1" library="SRG" deviceset="JST-PH_2-PIN_HEADER" device="" value="CH0"/>
+<part name="J1" library="SRG" deviceset="JST-PH_2-PIN_HEADER" device="" value="FSR C0"/>
 <part name="SUPPLY1" library="SparkFun-PowerSymbols" deviceset="VCC" device=""/>
 <part name="R2" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="R-US_" device="0204/5" value="3k3"/>
-<part name="J2" library="SRG" deviceset="JST-PH_2-PIN_HEADER" device="" value="CH1"/>
+<part name="J2" library="SRG" deviceset="JST-PH_2-PIN_HEADER" device="" value="FSR C1"/>
 <part name="SUPPLY2" library="SparkFun-PowerSymbols" deviceset="VCC" device=""/>
 <part name="R3" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="R-US_" device="0204/5" value="3k3"/>
-<part name="J3" library="SRG" deviceset="JST-PH_2-PIN_HEADER" device="" value="CH2"/>
+<part name="J3" library="SRG" deviceset="JST-PH_2-PIN_HEADER" device="" value="FSR C2"/>
 <part name="SUPPLY3" library="SparkFun-PowerSymbols" deviceset="VCC" device=""/>
 <part name="R4" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="R-US_" device="0204/5" value="3k3"/>
-<part name="J4" library="SRG" deviceset="JST-PH_2-PIN_HEADER" device="" value="CH3"/>
+<part name="J4" library="SRG" deviceset="JST-PH_2-PIN_HEADER" device="" value="FSR C3"/>
 <part name="SUPPLY4" library="SparkFun-PowerSymbols" deviceset="VCC" device=""/>
 <part name="GND5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="J5" library="SRG" deviceset="JST-PH_2-PIN_HEADER" device="" value="Z END STOP"/>

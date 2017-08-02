@@ -16,7 +16,9 @@ Provides bed leveling FSR sensor controller for square heat beds.
 
 ### Materials
 
-Uses Arduino Nano with FSR-402 sensors. See [schema.pdf](https://github.com/random-builder/fsr-endstop/blob/master/schema/schema.pdf).
+Uses [Arduino Nano](https://github.com/random-builder/toucher/blob/master/docs/nano-pinout.pdf)
+with [FSR-402](https://github.com/random-builder/toucher/blob/master/docs/FSR-402.pdf) sensors.
+See [schema.pdf](https://github.com/random-builder/fsr-endstop/blob/master/schema/schema.pdf).
 
 ### Algorithm
 

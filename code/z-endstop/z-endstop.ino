@@ -33,6 +33,7 @@ void loop_avg() {
 }
 
 // logger params
+#define LOG_PERIOD 3 // seconds
 int LOG_LOOP = calc_log_loop();
 int log_step = 0; // loop step
 boolean log_fsr_stats = false; // rom config
@@ -45,16 +46,16 @@ void loop_log() {
   }
   log_step = 0;
   LOG_LOOP = calc_log_loop();
-  if (log_fsr_stats) {
-    print_fsr_stats();
-  }
+  if (!log_fsr_stats) return; // log when enabled
+  if (out_state) return; // log outside signal
+  print_fsr_stats();
 }
 
 // system params
 #define SYS_LOOP 1000 // sample frequency
 int sys_step = 0; // loop step
 long wall_time = 0; // sample time, milliseconds
-long loop_time = 200; // loop period, microseconds
+long loop_time = 225; // loop period, microseconds
 
 // load settings
 void apply_rom() {
@@ -86,9 +87,9 @@ void loop_sys() {
   apply_time();
 }
 
-// auto adjust logger period to 1 second
+// auto adjust logger period to N seconds
 int calc_log_loop() {
-  return 1000000 / loop_time;
+  return LOG_PERIOD * 1000000 / loop_time;
 }
 
 // report sensor status

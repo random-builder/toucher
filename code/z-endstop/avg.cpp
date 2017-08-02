@@ -6,7 +6,7 @@
 #include "a.h"
 #include "avg.h"
 
-// validation limits
+// rate validation limits
 #define AVG_FAST_MIN 2
 #define AVG_FAST_MAX 8
 #define AVG_SLOW_MIN 3
