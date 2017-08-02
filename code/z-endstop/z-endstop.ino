@@ -5,6 +5,7 @@
 #include "adc.h"
 #include "avg.h"
 #include "cmd.h"
+#include "log.h"
 #include "out.h"
 #include "srv.h"
 #include "rom.h"
@@ -36,7 +37,6 @@ void loop_avg() {
 #define LOG_PERIOD 3 // seconds
 int LOG_LOOP = calc_log_loop();
 int log_step = 0; // loop step
-boolean log_fsr_stats = false; // rom config
 
 // publish periodic report
 void loop_log() {
@@ -46,16 +46,14 @@ void loop_log() {
   }
   log_step = 0;
   LOG_LOOP = calc_log_loop();
-  if (!log_fsr_stats) return; // log when enabled
-  if (out_state) return; // log outside signal
-  print_fsr_stats();
+  log_fsr_stats();
 }
 
 // system params
 #define SYS_LOOP 1000 // sample frequency
 int sys_step = 0; // loop step
 long wall_time = 0; // sample time, milliseconds
-long loop_time = 225; // loop period, microseconds
+long loop_time = 220; // loop period, microseconds
 
 // load settings
 void apply_rom() {
@@ -65,8 +63,7 @@ void apply_rom() {
   rom_read(out_trig_hi, fsr_hi);
   rom_read(out_trig_lo, fsr_lo);
   rom_read(out_invert, fsr_inv);
-  rom_read(out_log_event, log_fsr_event);
-  rom_read(log_fsr_stats, log_fsr_stats);
+  rom_read(log_mode_mask, log_mode);
 }
 
 // measure times
@@ -93,14 +90,18 @@ int calc_log_loop() {
 }
 
 // report sensor status
-void print_fsr_stats() {
+void log_fsr_stats() {
+  if (out_state) return; // log outside signal
+  if (!log_has_mode(LOG_FSR_STATS_SOME)) return; // log when enabled
   char text[32];
-  sprintf_P(text, PSTR("T@%-8lu | "), millis()); Serial.print(text);
-  sprintf_P(text, PSTR("L=%-4lu | "), loop_time); Serial.print(text);
+  sprintf_P(text, PSTR("T@%-8lu | "), millis()); log_print(text);
+  sprintf_P(text, PSTR("L=%-4lu | "), loop_time); log_print(text);
   for (byte ch = 0; ch < 4; ch++) {
-    avg_render_status(ch, text); Serial.print(text); Serial.print(F("| "));
+    avg_render_chan(ch, text); log_print(text);
+    avg_render_slow(ch, text); log_print(text);
+    log_print_bar();
   }
-  Serial.println();
+  log_println();
 }
 
 // check terminal input
@@ -116,8 +117,8 @@ void loop_out() {
 // init port
 void setupComm() {
   Serial.begin(115200);
-  Serial.println();
-  Serial.println(F("make: " __DATE__ " " __TIME__));
+  log_println();
+  log_println(F("make: " __DATE__ " " __TIME__));
 }
 
 // main setup

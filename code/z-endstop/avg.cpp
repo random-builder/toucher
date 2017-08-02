@@ -105,18 +105,19 @@ int avg_calc_trigger() {
   return delta - drift;
 }
 
-// provide detailed averages
-void avg_render_detail(byte ch, char text[]) {
-  int fast_avg = fast_avg_val[ch]; int fast_dev = fast_dev_val[ch];
-  int slow_avg = slow_avg_val[ch]; int slow_dev = slow_dev_val[ch];
-  sprintf_P(text, PSTR("C%i F=%4i/%-2i S=%4i/%-2i D=%+3i "),
-            ch, fast_avg, fast_dev, slow_avg, slow_dev, fast_avg - slow_avg
-           );
+void avg_render_chan(byte ch, char text[]) {
+  sprintf_P(text, PSTR("C%i "), ch);
 }
 
-// provide only slow averages
-void avg_render_status(byte ch, char text[]) {
-  int slow_avg = slow_avg_val[ch]; int slow_dev = slow_dev_val[ch];
-  sprintf_P(text, PSTR("C%i S=%4i/%-2i"), ch, slow_avg, slow_dev);
+void avg_render_fast(byte ch, char text[]) {
+  sprintf_P(text, PSTR("F=%4i/%-2i "), fast_avg_val[ch], fast_dev_val[ch]);
+}
+
+void avg_render_slow(byte ch, char text[]) {
+  sprintf_P(text, PSTR("S=%4i/%-2i "), slow_avg_val[ch], slow_dev_val[ch]);
+}
+
+void avg_render_diff(byte ch, char text[]) {
+  sprintf_P(text, PSTR("D=%-+3i "), fast_avg_val[ch] - slow_avg_val[ch]);
 }
 

@@ -23,8 +23,10 @@ void avg_calc_slow(byte ch, int val);
 int avg_calc_trigger();
 
 // provide channel reporting status
-void avg_render_detail(byte ch, char text[]);
-void avg_render_status(byte ch, char text[]);
+void avg_render_chan(byte ch, char text[]);
+void avg_render_fast(byte ch, char text[]);
+void avg_render_slow(byte ch, char text[]);
+void avg_render_diff(byte ch, char text[]);
 
 #endif // AVG_H
 

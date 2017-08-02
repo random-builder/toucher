@@ -5,6 +5,7 @@
 #define ROM_H
 
 #include "a.h"
+#include "log.h"
 #include <avr/eeprom.h>
 
 // macros https://projectgus.com/2010/07/eeprom-access-with-arduino/
@@ -21,13 +22,12 @@ struct rom_struct {
   int fsr_lo; // trigger lower threshold
   int fsr_hi; // trigger upper threshold
   boolean fsr_inv; // invert output value
-  boolean log_fsr_stats; // periodic logging
-  boolean log_fsr_event; // on-demand logging
+  int log_mode; // logger mode config
   int srv_ini_clr; // initial servo position
 };
 
 // report macros
-#define rom_print(x) rom_read(x,x); Serial.print(F(STR(x))); Serial.print(F("=")); Serial.println(x);
+#define rom_print(x) rom_read(x,x); log_print(F(STR(x))); log_print(F("=")); Serial.println(x); // XXX
 
 // report settings
 void rom_report() {
@@ -37,13 +37,12 @@ void rom_report() {
   int fsr_lo; rom_print(fsr_lo);
   int fsr_hi; rom_print(fsr_hi);
   boolean fsr_inv; rom_print(fsr_inv);
-  boolean log_fsr_stats; rom_print(log_fsr_stats);
-  boolean log_fsr_event; rom_print(log_fsr_event);
+  int log_mode; rom_print(log_mode);
   int srv_ini_clr; rom_print(srv_ini_clr);
 }
 
 // settings version
-#define rom_form 9
+#define rom_form 10
 
 // settings defaults
 void rom_defaults() {
@@ -52,8 +51,7 @@ void rom_defaults() {
   rom_write(7, fsr_lo);
   rom_write(14, fsr_hi);
   rom_write(true, fsr_inv);
-  rom_write(false, log_fsr_stats);
-  rom_write(false, log_fsr_event);
+  rom_write(0, log_mode);
   rom_write(0, srv_ini_clr);
   rom_write(rom_form, form);
 }
